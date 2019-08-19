@@ -1,0 +1,3 @@
+[submodule "django-feather/feather"]
+	path = django-feather/feather
+	url = git@github.com:feathericons/feather.git

@@ -1,0 +1,5 @@
+include AUTHORS LICENSE *.rst README.md
+recursive-include django-feather/feather/icons *.svg
+recursive-include django-feather *.py
+recursive-exclude * __pycache__
+recursive-exclude * *.py[cod]

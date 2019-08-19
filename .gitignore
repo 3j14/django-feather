@@ -1,0 +1,89 @@
+# Database related stuff
+*.db
+*.rdb
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Translations
+*.mo
+*.pot
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# virtualenv
+.venv
+venv/
+ENV/
+
+# mypy
+.mypy_cache/
+
+# IntelliJ
+.idea
+.vscode/launch.json
+.vscode/settings.json
+
+# OS stuff
+.DS_Store
+
+*.swp
+*.pyc
+/.coverage
+/dist/
+/build/
+/MANIFEST
+/wagtail.egg-info/
+/docs/_build/
+/.tox/
+/venv
+/node_modules/
+npm-debug.log*
+*.idea/
+/*.egg/
+/.cache/
+/.pytest_cache/
+
+### JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+coverage/
+client/node_modules
+
+### vscode
+.vscode
+
+.sass-cache
+node-modules
