@@ -4,11 +4,14 @@ A simple Tag (`{% icon "name" %}`) to implement [Feather Icons](https://featheri
 
 ## Install
 Install `django-feather` using `pip` and put it into your `INSTALLED_APPS`:
+```bash
+pip install django-feather
+```  
+`settings.py`:
 ```python
-# settings.py
 INSTALLED_APPS = [
     # ...
-    'django-feather',
+    'django_feather',
     # ...
 ]
 ```
@@ -19,11 +22,20 @@ After installation, the tag can be used just like any other tag:
 ```djangotemplate
 {% load icon %}
 
-{% icon "coffee" class="css-class" height="8" width="8" %}
+<p>Using a string {% icon "coffee" class="css-class" height="8" width="8" %}</p>
+<p>Using a variable {% icon self.icon class="css-class" height="8" width="8" %}</p>
+
 ```
 
-The `icon` tag will simply read the SVG files from the Feather project,
+The `icon` tag will simply take the SVG source from the Feather project,
 apply additional attributes and return the SVG tag.
+
+## Performance
+`django-feather` does not read the `.svg` files each time an icon is rendered.
+Instead, all the icons are written to a `.py` file upon build, just like the JavaScript
+library.  
+However, other than the JavaScript library, icons are rendered on the server side.
+This avoids having to call `feather.replace()` after the page has loaded.  
 
 ## License
 Feather is licensed under the [MIT License](https://github.com/colebemis/feather/blob/master/LICENSE).

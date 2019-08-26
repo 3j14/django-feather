@@ -1,11 +1,8 @@
-from os import path
-from xml.dom import minidom
-
 from django import template
 
+from django_feather import icons
+
 register = template.Library()
-parent_dir = path.dirname(path.dirname(path.abspath(__file__)))
-icon_dir = path.join(parent_dir, 'feather', 'icons')
 
 
 class IconNode(template.Node):
@@ -38,15 +35,22 @@ class IconNode(template.Node):
             return ''
         if not icon_name:
             return ''
-        file = path.join(icon_dir, icon_name + '.svg')
-        print(file)
-        if path.isfile(file):
-            doc = minidom.parse(file)
-            for attr, val in self.attrs.items():
-                doc.documentElement.setAttribute(attr, val.resolve(context))
-            return doc.toxml()
-        else:
+        # Use the python underscore convention for icon names
+        icon_name = icon_name.replace('-', '_')
+        if not hasattr(icons, icon_name):
+            # Icon could not be found
             return ''
+
+        svg: str = getattr(icons, icon_name)
+        head: list = ['<svg']
+        tail: list = [svg.split('<svg ')[-1]]
+        attributes: list = ['%s=\"%s\"' % (attr, val.resolve(context))
+                            for attr, val in self.attrs.items()]
+        if 'width' not in self.attrs:
+            attributes.append('width=\"24\"')
+        if 'height' not in self.attrs:
+            attributes.append('height=\"24\"')
+        return ' '.join(head + attributes + tail)
 
 
 @register.tag(name='icon')
