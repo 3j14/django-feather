@@ -23,8 +23,8 @@ class BuildIconsCommand(build_py):
                 icon_name = str(file.split('.')[0]).replace('-', '_')
                 with open(path.join(icon_dir, file), 'r') as icon:
                     svg = icon.read()
-                # Modify the svg, remove width and height
-                svg = re.sub(r'((?<!-)(width|height)=\"\d*\"|\n)', r'', svg)
+                # Modify the svg, remove line and spaces
+                svg = re.sub(r'\n', r' ', svg)
                 svg = re.sub(r'\s+', r' ', svg)
                 svg = svg.replace('> <', '><').replace(' />', '/>')
                 # Add to the build file
@@ -42,7 +42,7 @@ testing_extras = []
 
 setup(
     name='django-feather',
-    version='0.2.3',
+    version='0.2.5',
     author='Jonas Drotleff',
     author_email='j.drotleff@desk-lab.de',
     cmdclass={

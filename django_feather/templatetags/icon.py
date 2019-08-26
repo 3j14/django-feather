@@ -1,3 +1,7 @@
+import io
+import time
+from xml.dom import minidom
+
 from django import template
 
 from django_feather import icons
@@ -41,16 +45,13 @@ class IconNode(template.Node):
             # Icon could not be found
             return ''
 
-        svg: str = getattr(icons, icon_name)
-        head: list = ['<svg']
-        tail: list = [svg.split('<svg ')[-1]]
-        attributes: list = ['%s=\"%s\"' % (attr, val.resolve(context))
-                            for attr, val in self.attrs.items()]
-        if 'width' not in self.attrs:
-            attributes.append('width=\"24\"')
-        if 'height' not in self.attrs:
-            attributes.append('height=\"24\"')
-        return ' '.join(head + attributes + tail)
+        doc = minidom.parseString(getattr(icons, icon_name))
+        for attr, val in self.attrs.items():
+            doc.documentElement.setAttribute(attr, val.resolve(context))
+
+        writer = io.StringIO()
+        SVGDocument(doc).writexml(writer)
+        return writer.getvalue()
 
 
 @register.tag(name='icon')
@@ -80,3 +81,17 @@ def icon(parser, token) -> IconNode:
         attrs[attr] = parser.compile_filter(val)
 
     return IconNode(icon_expr, attrs=attrs)
+
+
+class SVGDocument:
+    def __init__(self, doc: minidom.Document):
+        self._doc = doc
+
+    @property
+    def doc(self) -> minidom.Document:
+        return self._doc
+
+    def writexml(self, writer, indent="", addindent="", newl=""):
+        """Ignore the xml tag"""
+        for node in self.doc.childNodes:
+            node.writexml(writer, indent, addindent, newl)
