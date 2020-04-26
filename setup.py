@@ -42,7 +42,7 @@ testing_extras = []
 
 setup(
     name='django-feather',
-    version='0.2.5',
+    version='0.2.6',
     author='Jonas Drotleff',
     author_email='j.drotleff@desk-lab.de',
     cmdclass={
