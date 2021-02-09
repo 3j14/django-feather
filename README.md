@@ -42,7 +42,7 @@ Feather is licensed under the [MIT License](https://github.com/colebemis/feather
     
 `django-feather` is licensed under the Apache License, Version 2.0:
 
-    Copyright 2020 Jonas Drotleff <j.drotleff@desk-lab.de>
+    Copyright 2019-2021 Jonas Drotleff <j.drotleff@desk-lab.de>
     
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
