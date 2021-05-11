@@ -30,7 +30,7 @@ class IconNode(template.Node):
         :param context: The context of the current template. Passed by
             the template engine
         :return: String DOM object
-        :trype: str
+        :rtype: str
         """
         try:
             # Resolve the icon name from the context.
