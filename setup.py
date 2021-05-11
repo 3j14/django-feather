@@ -43,7 +43,7 @@ testing_extras = [
 
 setup(
     name="django-feather",
-    version="0.2.6",
+    version="0.3.0",
     author="Jonas Drotleff",
     author_email="j.drotleff@desk-lab.de",
     cmdclass={"build_py": BuildIconsCommand},
@@ -58,11 +58,14 @@ setup(
         "testing": testing_extras,
     },
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Framework :: Django",
         "Framework :: Django :: 2.0",
         "Framework :: Django :: 2.1",
         "Framework :: Django :: 2.2",
+        "Framework :: Django :: 3.0",
+        "Framework :: Django :: 3.1",
+        "Framework :: Django :: 3.2",
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
