@@ -1,5 +1,8 @@
 # Django Feather
 
+[![Build and Publish](https://github.com/jnsdrtlf/django-feather/actions/workflows/build.yml/badge.svg)](https://github.com/jnsdrtlf/django-feather/actions/workflows/build.yml)
+[![Test](https://github.com/jnsdrtlf/django-feather/actions/workflows/test.yml/badge.svg)](https://github.com/jnsdrtlf/django-feather/actions/workflows/test.yml)
+
 A simple Tag (`{% icon "name" %}`) to implement [Feather Icons](https://feathericons.com) in Django.
 
 ## Install
@@ -19,16 +22,24 @@ INSTALLED_APPS = [
 ## Usage
 After installation, the tag can be used just like any other tag:
 
-```djangotemplate
+```html
 {% load icon %}
 
 <p>Using a string {% icon "coffee" class="css-class" height="8" width="8" %}</p>
-<p>Using a variable {% icon self.icon class="css-class" height="8" width="8" %}</p>
+<p>Using a variable {% icon icon_name class="css-class" height="8" width="8" %}</p>
 
 ```
 
 The `icon` tag will simply take the SVG source from the Feather project,
 apply additional attributes and return the SVG tag.
+
+Additionally, data URIs are supported by setting `data_uri=True`. This
+will yield a Base64 encoded data URI that can be used e.g. in `src`
+attributes or with CSS:
+
+```html
+<img src="{% icon icon_name data_uri=True %}">
+```
 
 ## Testing
 
