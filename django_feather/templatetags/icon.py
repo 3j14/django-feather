@@ -1,3 +1,4 @@
+import base64
 import io
 from typing import Optional
 from xml.dom import minidom
@@ -19,6 +20,10 @@ class IconNode(template.Node):
     def __init__(self, icon_expr, attrs: Optional[dict] = None):
         if attrs is None:
             attrs = {}
+        # data_uri is used to return a valid data uri string which
+        # will be interpreted by browsers as an URI and can thus be used
+        # to render SVGs e.g. from ``src`` attributes or from CSS.
+        self.data_uri = attrs.pop("data_uri", False)
         self.icon_expr = icon_expr
         self.attrs = attrs
 
@@ -53,7 +58,14 @@ class IconNode(template.Node):
 
         writer = io.StringIO()
         SVGDocument(doc).writexml(writer)
-        return writer.getvalue()
+        svg_output: str = writer.getvalue()
+        if not self.data_uri:
+            return svg_output
+        else:
+            svg_base64: bytes = base64.b64encode(svg_output.encode("utf-8"))
+            return "data:image/svg+xml;base64,{svg_base64:s}".format(
+                svg_base64=svg_base64.decode("ascii")
+            )
 
 
 @register.tag(name="icon")
@@ -63,7 +75,7 @@ def icon(parser, token) -> IconNode:
     Feather Icon Tag for django templates
 
     .. usage::
-        - `{% icon "icon_name"  class="css-class" %}`
+        - `{% icon "icon_name" class="css-class" data_uri=True %}`
         - `{% icon self.icon class="css-class" height="18" %}`
 
     :param parser: Passed by the templating engine
