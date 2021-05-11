@@ -1,5 +1,6 @@
 include AUTHORS LICENSE *.rst README.md
 recursive-include django_feather *.py
 recursive-exclude feather *
+recursive-exclude tests *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[cod]

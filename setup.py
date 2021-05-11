@@ -36,7 +36,10 @@ install_requires = [
     "django>=2.0",
 ]
 
-testing_extras = []
+testing_extras = [
+    "pytest",
+    "pytest-django"
+]
 
 setup(
     name="django-feather",

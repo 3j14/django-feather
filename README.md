@@ -30,6 +30,30 @@ After installation, the tag can be used just like any other tag:
 The `icon` tag will simply take the SVG source from the Feather project,
 apply additional attributes and return the SVG tag.
 
+## Testing
+
+There are a few tests in the `tests` directory that should test the
+basic functions of this module. However, as these tests require the
+package to be build (so that the `django_feather.icons` module is
+populated), there are a few important steps to testing:
+
+```shell
+# Start by building the project
+python setup.py build
+# There should now be a build/lib directory present
+
+# Make sure that django, pytest and pytest-django are installed:
+pip install django pytest pytest-django
+
+# Run the tests
+export DJANGO_SETTINGS_MODULE=tests.settings
+PYTHONPATH=build/lib:./ pytest tests 
+```
+
+The environment variable `PYTHONPATH` ensures that `django_feather` is
+not imported from the current directory but rather from the `build/lib`
+directory.
+
 ## Performance
 `django-feather` does not read the `.svg` files each time an icon is rendered.
 Instead, all the icons are written to a `.py` file upon build, just like the JavaScript
