@@ -1,5 +1,5 @@
 import io
-import time
+from typing import Optional
 from xml.dom import minidom
 
 from django import template
@@ -16,7 +16,9 @@ class IconNode(template.Node):
     the Django Templating Engine
     """
 
-    def __init__(self, icon_expr, attrs: dict = {}):
+    def __init__(self, icon_expr, attrs: Optional[dict] = None):
+        if attrs is None:
+            attrs = {}
         self.icon_expr = icon_expr
         self.attrs = attrs
 
@@ -36,14 +38,14 @@ class IconNode(template.Node):
             # or an actual string (e.g. `"icon"`)
             icon_name = self.icon_expr.resolve(context)
         except template.VariableDoesNotExist:
-            return ''
+            return ""
         if not icon_name:
-            return ''
+            return ""
         # Use the python underscore convention for icon names
-        icon_name = icon_name.replace('-', '_')
+        icon_name = icon_name.replace("-", "_")
         if not hasattr(icons, icon_name):
             # Icon could not be found
-            return ''
+            return ""
 
         doc = minidom.parseString(getattr(icons, icon_name))
         for attr, val in self.attrs.items():
@@ -54,7 +56,7 @@ class IconNode(template.Node):
         return writer.getvalue()
 
 
-@register.tag(name='icon')
+@register.tag(name="icon")
 def icon(parser, token) -> IconNode:
     """Icon Tag
 
@@ -76,7 +78,7 @@ def icon(parser, token) -> IconNode:
     attrs = {}
 
     for bit in bits:
-        attr, val = bit.split('=')
+        attr, val = bit.split("=")
         # setup to resolve context variables as value
         attrs[attr] = parser.compile_filter(val)
 

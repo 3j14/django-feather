@@ -1,1 +1,1 @@
-name = 'django-feather'
+name = "django-feather"
